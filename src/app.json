@@ -1,0 +1,16 @@
+{
+  "pages": [
+    "pages/index/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "RadeBook",
+    "navigationBarTextStyle": "black"
+  },
+  "usingComponents": {
+    "van-button": "vant-weapp/dist/button/index",
+    "van-icon": "vant-weapp/dist/icon/index",
+    "van-dialog": "vant-weapp/dist/dialog/index"
+  }
+}
