@@ -3,7 +3,7 @@
     <div class="home" v-if="isAuth">
       <SearchBar
         :disabled="false"
-        @Onclick='onSearchBarClick'
+        @onClick='onSearchBarClick'
         :hotSearch="hotSearch"
       >
       </SearchBar>
@@ -75,13 +75,23 @@
   import HomeBanner from '../../components/home/HomeBanner'
   import HomeBook from '../../components/home/HomeBook'
   import Auth from '../../components/base/Auth'
-  import { getHomeData, recommend, freeRead, hotBook } from '../../API'
+  import {
+    getHomeData,
+    recommend,
+    freeRead,
+    hotBook,
+    register
+  } from '../../API'
   import {
     getSetting,
     getUserInfo,
     setStorageSync,
     getStorageSync,
-    getUserOpenId } from '../../API/wechat'
+    getUserOpenId,
+    showLoading,
+    hideLoading
+  } from '../../API/wechat'
+
 
   export default {
     data() {
@@ -116,7 +126,7 @@
         }
       },
       onSearchBarClick() {
-
+        this.$router.push('/pages/search/main')
       },
       onBannerClick() {
         console.log('banner ...')
@@ -127,7 +137,7 @@
       onBookClick() {
         console.log('book.....')
       },
-      getHomeData(openId) {
+      getHomeData(openId, userInfo) {
         getHomeData({ openId }).then(response => {
           const {
             data: {
@@ -152,23 +162,27 @@
           this.homeCard = {
             bookList: shelf,
             num: shelfCount,
-            userInfo: {
-              avatar: 'https://www.youbaobao.xyz/mpvue-res/logo.jpg',
-              nickname: '米老鼠'
-            }
+            userInfo: userInfo.userInfo
           }
+            hideLoading()
+        }).catch(() =>{
+          hideLoading()
         })
       },
       getUserInfo() {
+        const onOpenIdComplete = (openId, userInfo) => {
+          this.getHomeData(openId, userInfo)
+          register(openId, userInfo)
+        }
         getUserInfo(
           (userInfo) => {
             console.log(userInfo)
             setStorageSync('userInfo', userInfo)
             const openId = getStorageSync('openId')
             if (!openId || openId.length === 0) {
-              getUserOpenId()
+              getUserOpenId(openId => onOpenIdComplete(openId, userInfo))
             } else {
-              console.log('已获得openId')
+              onOpenIdComplete(openId, userInfo)
             }
           },
           () => {
@@ -181,6 +195,7 @@
           'userInfo',
           () => {
             this.isAuth = true
+            showLoading('正在加载中.....')
             this.getUserInfo()
           },
           () => {

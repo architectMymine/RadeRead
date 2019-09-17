@@ -5,7 +5,9 @@
         <div class="auth-img">
           <ImageView
             src="https://www.youbaobao.xyz/mpvue-res/logo.jpg"
-            round="round"
+            height="100%"
+            mode="scaleToFill"
+            round
           ></ImageView>
         </div>
         <div class="sub-title">登录小慕读书</div>
@@ -63,6 +65,7 @@
 
         .auth-img {
           width: 74px;
+          height: 74px;
         }
 
         .sub-title {

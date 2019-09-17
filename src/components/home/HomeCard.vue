@@ -3,7 +3,12 @@
 		<div class="home-card-inner">
 			<div class="user-info">
 				<div class="avatar-wrapper">
-					<ImageView :src="avatar" round>
+					<ImageView
+            :src="avatar"
+            round
+            height="100%"
+            mode="scaleToFill"
+          >
 					</ImageView>
 				</div>
 				<div class="nickname">{{nickname}}</div>
@@ -50,10 +55,10 @@
 		},
     computed: {
 		  avatar() {
-		    return (this.data && this.data.userInfo && this.data.userInfo.avatar) || ''
+		    return (this.data && this.data.userInfo && this.data.userInfo.avatarUrl) || ''
       },
       nickname() {
-        return (this.data && this.data.userInfo && this.data.userInfo.nickname) || ''
+        return (this.data && this.data.userInfo && this.data.userInfo.nickName) || ''
       },
       bookList() {
 		    return (this.data && this.data.bookList) || []

@@ -1,13 +1,12 @@
 <template>
 	<div class="search-bar">
-		<div class="search-bar-wrapper">
+		<div class="search-bar-wrapper" @click="onSearchBarClick">
 			<van-icon 
 				class='search'
 				name='search'
 				size='16px'
 				color='#858c96'
-				@click="onSearchBarClick">
-				</van-icon>
+				></van-icon>
 			<input type="text" 
 				   class="search-bar-input"
 				   :focus="focus"
