@@ -1,131 +1,72 @@
 <template>
   <div>
-    <SearchList :data="data"></SearchList>
+    <Searchbar
+      :focus="searchFocus"
+      @onChange="onChange"
+    ></Searchbar>
+    <TagGroup
+      header-text="热门搜索"
+      btn-text="换一批"
+      :value="[]"
+      @onBtnClick="changeHotSearch"
+      @onTagClick="showBookDetail"
+      v-if="hotSearch.length > 0 && !showList"
+    ></TagGroup>
+    <TagGroup
+      header-text="历史搜索"
+      btn-text="清空"
+      :value="[]"
+      @onBtnClick="clearHistorySearch"
+      @onTagClick="searchKeyWord"
+      v-if="historySearch.length > 0 && !showList"
+    ></TagGroup>
+    <SearchList
+      :data="searchList"
+      v-if="showList"
+    ></SearchList>
   </div>
 </template>
 
 <script>
   import SearchList from '../../components/search/SearchList'
+  import Searchbar from '../../components/home/Searchbar'
+  import TagGroup from '../../components/base/TagGroup'
 
   export default {
     computed: {
-      data() {
-        return {
-          item: this.item,
-          list: this.list
-        }
+      showList() {
+        const keys = Object.keys(this.searchList)
+        return keys.length > 0
       }
     },
     data() {
       return {
-        item: [
-          {
-            icon: 'apps-o',
-            title: 'Computer Science',
-            subTitle: 'Category'
-          },
-          {
-            icon: 'contact',
-            title: 'Computer Science',
-            subTitle: 'Author'
-          },
-          {
-            icon: 'newspaper-o',
-            title: 'Computer Science',
-            subTitle: 'Publisher'
-          }
-        ],
-        list: [
-          {
-            'id': 225,
-            'fileName': '2016_Book_MicrofinanceEUStructuralFundsA',
-            'cover': 'https://www.youbaobao.xyz/book/res/img/Economics/2016_Book_MicrofinanceEUStructuralFundsA.jpeg',
-            'title': 'Microfinance, EU Structural Funds and Capacity Building for Managing Authorities',
-            'author': 'Giovanni Nicola Pes',
-            'publisher': 'Palgrave Macmillan',
-            'bookId': '2016_Book_MicrofinanceEUStructuralFundsA',
-            'category': 3,
-            'categoryText': 'Economics',
-            'language': 'en',
-            'rootFile': 'OEBPS/9781137536013.opf'
-          },
-          {
-            'id': 88,
-            'fileName': '2018_Book_BetweenMobilityAndMigration',
-            'cover': 'https://www.youbaobao.xyz/book/res/img/SocialSciences/978-3-319-77991-1_CoverFigure.jpg',
-            'title': 'Between Mobility and Migration',
-            'author': 'Peter Scholten',
-            'publisher': 'Springer International Publishing',
-            'bookId': '2018_Book_BetweenMobilityAndMigration',
-            'category': 2,
-            'categoryText': 'SocialSciences',
-            'language': 'en',
-            'rootFile': 'OEBPS/package.opf'
-          },
-          {
-            'id': 24,
-            'fileName': '2018_Book_SecurityInComputerAndInformati',
-            'cover': 'https://www.youbaobao.xyz/book/res/img/ComputerScience/978-3-319-95189-8_CoverFigure.jpg',
-            'title': 'Security in Computer and Information Sciences',
-            'author': 'Erol Gelenbe',
-            'publisher': 'Springer International Publishing',
-            'bookId': '2018_Book_SecurityInComputerAndInformati',
-            'category': 1,
-            'categoryText': 'ComputerScience',
-            'language': 'en',
-            'rootFile': 'OEBPS/package.opf'
-          },
-          {
-            'id': 225,
-            'fileName': '2016_Book_MicrofinanceEUStructuralFundsA',
-            'cover': 'https://www.youbaobao.xyz/book/res/img/Economics/2016_Book_MicrofinanceEUStructuralFundsA.jpeg',
-            'title': 'Microfinance, EU Structural Funds and Capacity Building for Managing Authorities',
-            'author': 'Giovanni Nicola Pes',
-            'publisher': 'Palgrave Macmillan',
-            'bookId': '2016_Book_MicrofinanceEUStructuralFundsA',
-            'category': 3,
-            'categoryText': 'Economics',
-            'language': 'en',
-            'rootFile': 'OEBPS/9781137536013.opf'
-          },
-          {
-            'id': 88,
-            'fileName': '2018_Book_BetweenMobilityAndMigration',
-            'cover': 'https://www.youbaobao.xyz/book/res/img/SocialSciences/978-3-319-77991-1_CoverFigure.jpg',
-            'title': 'Between Mobility and Migration',
-            'author': 'Peter Scholten',
-            'publisher': 'Springer International Publishing',
-            'bookId': '2018_Book_BetweenMobilityAndMigration',
-            'category': 2,
-            'categoryText': 'SocialSciences',
-            'language': 'en',
-            'rootFile': 'OEBPS/package.opf'
-          },
-          {
-            'id': 24,
-            'fileName': '2018_Book_SecurityInComputerAndInformati',
-            'cover': 'https://www.youbaobao.xyz/book/res/img/ComputerScience/978-3-319-95189-8_CoverFigure.jpg',
-            'title': 'Security in Computer and Information Sciences',
-            'author': 'Erol Gelenbe',
-            'publisher': 'Springer International Publishing',
-            'bookId': '2018_Book_SecurityInComputerAndInformati',
-            'category': 1,
-            'categoryText': 'ComputerScience',
-            'language': 'en',
-            'rootFile': 'OEBPS/package.opf'
-          }
-        ]
+        hotSearch: [],
+        historySearch: [],
+        searchList: {},
+        searchFocus: true
       }
     },
     methods: {
-      onTagClick(text, index) {
-        console.log('tag...' + text + index)
+      onChange(keyword) {
+        console.log(keyword)
       },
-      onBtnClick() {
-        console.log('btn....')
+      changeHotSearch() {
+        console.log('change hot search')
+      },
+      showBookDetail() {
+        console.log('show book detail')
+      },
+      clearHistorySearch() {
+        console.log('clear book detail')
+      },
+      searchKeyWord() {
+        console.log('show book detail')
       }
     },
     components: {
+      TagGroup,
+      Searchbar,
       SearchList
     }
   }
