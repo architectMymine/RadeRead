@@ -1,25 +1,28 @@
 <template>
   <div class="search-list-wrapper">
     <SearchItem
-      :icon="category.icon"
-      :title="category.title"
-      :sub-title="category.subTitle"
-      @onClick="showList(category.title,'category')"
+      icon="apps-o"
+      :title="category"
+      sub-title="Category"
+      @onClick="showList(category,'category')"
+      v-if="category"
     ></SearchItem>
     <SearchItem
-      :icon="author.icon"
-      :title="author.title"
-      :sub-title="author.subTitle"
-      @onClick="showList(author.title,'author')"
+      icon="user-o"
+      :title="author"
+      sub-title="Author"
+      @onClick="showList(author,'author')"
+      v-if="author"
     ></SearchItem>
     <SearchItem
-      :icon="pulisher.icon"
-      :title="pulisher.title"
-      :sub-title="pulisher.subTitle"
-      @onClick="showList(pulisher.title,'pulisher')"
+      icon="newspaper-o"
+      :title="pulisher"
+      sub-title="Pulisher"
+      @onClick="showList(pulisher,'pulisher')"
+      v-if="pulisher"
     ></SearchItem>
     <SearchTable
-      :data="data.list"
+      :data="data.book"
       @onClick="onBookClick"
     ></SearchTable>
   </div>
@@ -39,13 +42,25 @@
     },
     computed: {
       category() {
-        return this.data.item[0]
+        if (this.data && this.data.category && this.data.category.length > 0) {
+          return this.data.category[0].categoryText
+        } else {
+          return false
+        }
       },
       author() {
-        return this.data.item[1]
+        if (this.data && this.data.author && this.data.author.length > 0) {
+          return this.data.author[0].author
+        } else {
+          return false
+        }
       },
       pulisher() {
-        return this.data.item[2]
+        if (this.data && this.data.publisher && this.data.publisher.length > 0) {
+          return this.data.publisher[0].publisher
+        } else {
+          return false
+        }
       }
     },
     methods: {
