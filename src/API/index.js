@@ -38,3 +38,7 @@ export function register(openId, userinfo) {
 export function search(params) {
   return get(`${API_URL}/book/search`, params)
 }
+
+export function hotSearch() {
+  return get(`${API_URL}/book/hot-search`)
+}

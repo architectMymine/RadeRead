@@ -118,6 +118,10 @@
 				.shelf-text {
 					font-size: 12px;
 					color: #ffffff;
+          width: 104px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
 				}
 
 				.nickname {

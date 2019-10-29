@@ -96,7 +96,9 @@
 			padding: 12px 17px;
 			.search-bar-input{
 				flex: 1;
+        font-size: 15px;
 				margin: 0 8px;
+        color: #666;
 			}
 			.search,clear{
 				height: 100%;

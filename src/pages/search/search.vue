@@ -1,8 +1,10 @@
 <template>
   <div>
     <Searchbar
+      :hotSearch="hotSearchKeyword"
       :focus="searchFocus"
       @onChange="onChange"
+      @onClick="onClear"
     ></Searchbar>
     <TagGroup
       header-text="热门搜索"
@@ -32,7 +34,7 @@
   import Searchbar from '../../components/home/Searchbar'
   import TagGroup from '../../components/base/TagGroup'
   import { getStorageSync } from '../../API/wechat'
-  import { search } from '../../API'
+  import { search, hotSearch } from '../../API'
 
   export default {
     computed: {
@@ -45,12 +47,16 @@
       return {
         hotSearch: [],
         historySearch: [],
+        hotSearchKeyword: '',
         searchList: {},
         searchFocus: true,
         openId: ''
       }
     },
     methods: {
+      onClear() {
+        this.searchList = {}
+      },
       onChange(keyword) {
         if (!keyword || keyword.trim().length === 0) {
           return
@@ -62,9 +68,7 @@
           keyword,
           openId: this.openId
         }).then(res => {
-          console.log(res.data)
           this.searchList = res.data.data
-          console.log(this.searchList)
         })
       },
       changeHotSearch() {
@@ -82,6 +86,10 @@
     },
     mounted() {
       this.openId = getStorageSync('openId')
+      hotSearch().then(res => {
+        console.log(res)
+      })
+      this.hotSearchKeyword = this.$route.query.hotSearch
     },
     components: {
       TagGroup,
