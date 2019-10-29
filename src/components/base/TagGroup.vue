@@ -27,7 +27,7 @@
     props: {
       headerText: String,
       btnText: String,
-      value: String
+      value: Array
     },
     methods: {
       onTagClick(text, index) {
@@ -41,30 +41,40 @@
 </script>
 
 <style scoped lang="scss">
-.tag-group-wrapper{
-  margin-top: 35px;
-  .tag-group-header{
-    display: flex;
-    justify-content: space-between;
-    padding: 0 16px;
-    .header-text{
-      color: #333;
-      font-size: 14px;
-      line-height: 20px;
+  .tag-group-wrapper {
+    margin-top: 35px;
+    width: 100%;
+    padding-bottom: 10px;
+    .tag-group-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 16px;
+
+      .header-text {
+        color: #333;
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+      .header-btn {
+        color: #3696EF;
+        font-size: 14px;
+        line-height: 20px;
+      }
     }
-    .header-btn{
-      color: #3696EF;
-      font-size: 14px;
-      line-height: 20px;
-    }
-  }
-  .tag-group{
-    display: flex;
-    flex-flow: row wrap;
-    padding: 4px 10px 0 10px;
-    .tag-group-inner{
+
+    .tag-group {
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-flow: row wrap;
+      padding: 4px 10px 0 10px;
+
+      .tag-group-inner {
+        max-width: 100%;
+        box-sizing: border-box;
         padding: 12px 6px 0 6px;
+      }
     }
   }
-}
 </style>
