@@ -51,10 +51,15 @@
 
     .search-item-info {
       margin-left: 10px;
+      width: 100%;
       .search-item-title {
         color: #333;
         font-size: 14px;
         line-height: 20px;
+        width: 80%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .search-item-sub-title {
