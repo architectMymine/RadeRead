@@ -9,6 +9,7 @@
       </SearchBar>
       <HomeCard
         :data="homeCard"
+        @onClick="onHomeBookClick"
       ></HomeCard>
       <HomeBanner
         img="http://www.youbaobao.xyz/book/res/bg.jpg"
@@ -70,155 +71,164 @@
 </template>
 
 <script>
-  import SearchBar from '../../components/home/Searchbar'
-  import HomeCard from '../../components/home/HomeCard'
-  import HomeBanner from '../../components/home/HomeBanner'
-  import HomeBook from '../../components/home/HomeBook'
-  import Auth from '../../components/base/Auth'
-  import {
-    getHomeData,
-    recommend,
-    freeRead,
-    hotBook,
-    register
-  } from '../../API'
-  import {
-    getSetting,
-    getUserInfo,
-    setStorageSync,
-    getStorageSync,
-    getUserOpenId,
-    showLoading,
-    hideLoading
-  } from '../../API/wechat'
+    import SearchBar from '../../components/home/Searchbar'
+    import HomeCard from '../../components/home/HomeCard'
+    import HomeBanner from '../../components/home/HomeBanner'
+    import HomeBook from '../../components/home/HomeBook'
+    import Auth from '../../components/base/Auth'
+    import {
+        getHomeData,
+        recommend,
+        freeRead,
+        hotBook,
+        register
+    } from '../../API'
+    import {
+        getSetting,
+        getUserInfo,
+        setStorageSync,
+        getStorageSync,
+        getUserOpenId,
+        showLoading,
+        hideLoading
+    } from '../../API/wechat'
 
 
-  export default {
-    data() {
-      return {
-        hotSearch: '',
-        homeCard: {},
-        banner: {},
-        recommend: [],
-        freeRead: [],
-        hotBook: [],
-        category: [],
-        isAuth: false
-      }
-    },
-    methods: {
-      recommendChange(key) {
-        switch (key) {
-          case 'recommend':
-            recommend().then(response => {
-              this.recommend = response.data.data
-            })
-            break
-          case 'freeRead':
-            freeRead().then(response => {
-              this.freeRead = response.data.data
-            })
-            break
-          case 'hotBook':
-            hotBook().then(response => {
-              this.hotBook = response.data.data
-            })
-        }
-      },
-      onSearchBarClick() {
-        this.$router.push({ path: '/pages/search/main', query: { hotSearch: this.hotSearch } })
-      },
-      onBannerClick() {
-        console.log('banner ...')
-      },
-      onCategoryMoreClick() {
-        console.log('more.....')
-      },
-      onBookClick() {
-        console.log('book.....')
-      },
-      getHomeData(openId, userInfo) {
-        getHomeData({ openId }).then(response => {
-          const {
-            data: {
-              hotSearch: {
-                keyword
-              },
-              shelf,
-              banner,
-              recommend,
-              freeRead,
-              hotBook,
-              category,
-              shelfCount
+    export default {
+        data() {
+            return {
+                hotSearch: '',
+                homeCard: {},
+                banner: {},
+                recommend: [],
+                freeRead: [],
+                hotBook: [],
+                category: [],
+                isAuth: false
             }
-          } = response.data
-          this.hotSearch = keyword
-          this.banner = banner
-          this.recommend = recommend
-          this.freeRead = freeRead
-          this.hotBook = hotBook
-          this.category = category
-          this.homeCard = {
-            bookList: shelf,
-            num: shelfCount,
-            userInfo: userInfo.userInfo
-          }
-          hideLoading()
-        }).catch(() => {
-          hideLoading()
-        })
-      },
-      getUserInfo() {
-        const onOpenIdComplete = (openId, userInfo) => {
-          this.getHomeData(openId, userInfo)
-          register(openId, userInfo)
-        }
-        getUserInfo(
-          (userInfo) => {
-            console.log(userInfo)
-            setStorageSync('userInfo', userInfo)
-            const openId = getStorageSync('openId')
-            if (!openId || openId.length === 0) {
-              getUserOpenId(openId => onOpenIdComplete(openId, userInfo))
-            } else {
-              onOpenIdComplete(openId, userInfo)
+        },
+        methods: {
+            recommendChange(key) {
+                switch (key) {
+                    case 'recommend':
+                        recommend().then(response => {
+                            this.recommend = response.data.data
+                        })
+                        break
+                    case 'freeRead':
+                        freeRead().then(response => {
+                            this.freeRead = response.data.data
+                        })
+                        break
+                    case 'hotBook':
+                        hotBook().then(response => {
+                            this.hotBook = response.data.data
+                        })
+                }
+            },
+            onHomeBookClick(book) {
+                console.log(book)
+                this.$router.push({
+                    path: '/pages/detail/main',
+                    query: {
+                        fileName: book.fileName
+                    }
+                })
+            },
+            onSearchBarClick() {
+                this.$router.push({path: '/pages/search/main', query: {hotSearch: this.hotSearch}})
+            },
+            onBannerClick() {
+                console.log('banner ...')
+            },
+            onCategoryMoreClick() {
+                console.log('more.....')
+            },
+            onBookClick() {
+                console.log('book.....')
+            },
+            getHomeData(openId, userInfo) {
+                getHomeData({openId}).then(response => {
+                    const {
+                        data: {
+                            hotSearch: {
+                                keyword
+                            },
+                            shelf,
+                            banner,
+                            recommend,
+                            freeRead,
+                            hotBook,
+                            category,
+                            shelfCount
+                        }
+                    } = response.data
+                    this.hotSearch = keyword
+                    this.banner = banner
+                    this.recommend = recommend
+                    this.freeRead = freeRead
+                    this.hotBook = hotBook
+                    this.category = category
+                    this.homeCard = {
+                        bookList: shelf,
+                        num: shelfCount,
+                        userInfo: userInfo.userInfo
+                    }
+                    hideLoading()
+                }).catch(() => {
+                    hideLoading()
+                })
+            },
+            getUserInfo() {
+                const onOpenIdComplete = (openId, userInfo) => {
+                    this.getHomeData(openId, userInfo)
+                    register(openId, userInfo)
+                }
+                getUserInfo(
+                    (userInfo) => {
+                        console.log(userInfo)
+                        setStorageSync('userInfo', userInfo)
+                        const openId = getStorageSync('openId')
+                        if (!openId || openId.length === 0) {
+                            getUserOpenId(openId => onOpenIdComplete(openId, userInfo))
+                        } else {
+                            onOpenIdComplete(openId, userInfo)
+                        }
+                    },
+                    () => {
+                        console.log('fail...')
+                    }
+                )
+            },
+            getSetting() {
+                getSetting(
+                    'userInfo',
+                    () => {
+                        this.isAuth = true
+                        showLoading('正在加载中.....')
+                        this.getUserInfo()
+                    },
+                    () => {
+                        this.isAuth = false
+                    }
+                )
+            },
+            init() {
+                this.getSetting()
             }
-          },
-          () => {
-            console.log('fail...')
-          }
-        )
-      },
-      getSetting() {
-        getSetting(
-          'userInfo',
-          () => {
-            this.isAuth = true
-            showLoading('正在加载中.....')
-            this.getUserInfo()
-          },
-          () => {
-            this.isAuth = false
-          }
-        )
-      },
-      init() {
-        this.getSetting()
-      }
-    },
-    mounted() {
-      this.init()
-    },
-    components: {
-      Auth,
-      HomeBook,
-      SearchBar,
-      HomeCard,
-      HomeBanner
+        },
+        mounted() {
+            this.init()
+        },
+        components: {
+            Auth,
+            HomeBook,
+            SearchBar,
+            HomeCard,
+            HomeBanner
+        }
+
     }
-
-  }
 </script>
 
 <style scoped>

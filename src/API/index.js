@@ -1,5 +1,5 @@
-import { get, post } from '../utils/request'
-import { APP_ID, APP_SECRET } from '../utils/const'
+import {get, post} from '../utils/request'
+import {APP_ID, APP_SECRET} from '../utils/const'
 
 const API_URL = 'https://test.youbaobao.xyz:18081'
 
@@ -41,4 +41,8 @@ export function search(params) {
 
 export function hotSearch() {
   return get(`${API_URL}/book/hot-search`)
+}
+
+export function bookDetail(params) {
+  return get(`${API_URL}/book/detail`, params)
 }
