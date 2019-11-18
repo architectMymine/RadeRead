@@ -38,8 +38,9 @@
 
 <script>
     import ImageView from '../base/ImageView'
+
     export default {
-        components: { ImageView },
+        components: {ImageView},
         props: {
             readers: Array,
             readerNum: Number,

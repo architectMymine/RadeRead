@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-contents-wrapper" v-if="contents">
+  <div class="detail-contents-wrapper" v-if="contents.length>0">
     <div class="detail-contents-title">目录</div>
     <div
       class="detail-contents"

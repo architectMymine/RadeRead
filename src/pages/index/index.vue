@@ -127,7 +127,6 @@
                 }
             },
             onHomeBookClick(book) {
-                console.log(book)
                 this.$router.push({
                     path: '/pages/detail/main',
                     query: {
@@ -136,7 +135,10 @@
                 })
             },
             onSearchBarClick() {
-                this.$router.push({path: '/pages/search/main', query: {hotSearch: this.hotSearch}})
+                this.$router.push({
+                    path: '/pages/search/main',
+                    query: {hotSearch: this.hotSearch}
+                })
             },
             onBannerClick() {
                 console.log('banner ...')
