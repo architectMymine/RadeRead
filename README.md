@@ -42,6 +42,12 @@ npm run build --report
  代码提交             git commit -m '注释'
  代码上传             git push origin master
  代码强制提交         git push -f origin master
+
+# 项目遇到的问题
+1.DetailContents组件不渲染问题 ，v-if判断条件存在问题。
+2.input的focus问题，这是个逻辑问题还没处理
+3.获取不了$router属性。 可能是组件没安装mpvuerouter
+
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
