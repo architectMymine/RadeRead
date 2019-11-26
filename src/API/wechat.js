@@ -79,3 +79,7 @@ export function showToast(title) {
     duration: 2000
   })
 }
+
+export function setNavigationBarTitle(title) {
+  mpvue.setNavigationBarTitle({title})
+}

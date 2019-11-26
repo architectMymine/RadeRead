@@ -23,7 +23,6 @@
     ></SearchItem>
     <SearchTable
       :data="data.book"
-      @onClick="onBookClick"
     ></SearchTable>
   </div>
 </template>
@@ -65,10 +64,14 @@
     },
     methods: {
       showList(text, key) {
-        console.log(text, key)
-      },
-      onBookClick(book) {
-        console.log(book)
+        this.$router.push({
+          path: '/pages/list/main',
+          query: {
+            text,
+            key,
+            title: text
+          }
+        })
       }
     }
   }
