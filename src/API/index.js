@@ -74,3 +74,7 @@ export function bookShelfRemove(params) {
 export function searchList(params) {
   return get(`${API_URL}/book/search-list`, params)
 }
+
+export function categoryList() {
+  return get(`${API_URL}/book/category/list/v2`)
+}

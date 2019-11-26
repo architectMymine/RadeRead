@@ -75,6 +75,9 @@ npm run build --report
 ##  需要在外面定义如:
 ##  const vue = this
 ##  才能获取到。
+
+## 7.在新建page的时候，注册页面的时候，如： pages/list/main
+##  中的list其实指的就是文件夹的名字，并非你vue文件的名字。
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
