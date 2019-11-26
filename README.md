@@ -44,11 +44,11 @@ npm run build --report
  代码强制提交         git push -f origin master
 
 # 项目遇到的问题
-1.DetailContents组件不渲染问题 ，v-if判断条件存在问题。
-2.input的focus问题，这是个逻辑问题还没处理
-3.获取不了$router属性。 可能是组件没安装mpvuerouter
-4.修复DetailContent组件不渲染问题，v-if的触发条件有问题，改正相反即可
-5.写在DetailBottom的事件不会触发，据说是mpvue的一个bug，解决方法就是不使用组件，直接将组件的内容写到
+##  1.DetailContents组件不渲染问题 ，v-if判断条件存在问题。
+##  2.input的focus问题，这是个逻辑问题还没处理
+##  3.获取不了$router属性。 可能是组件没安装mpvuerouter
+##  4.修复DetailContent组件不渲染问题，v-if的触发条件有问题，改正相反即可
+##  5.写在DetailBottom的事件不会触发，据说是mpvue的一个bug，解决方法就是不使用组件，直接将组件的内容写到
 detail页面中，这时候事件会正常触发(之后开发可以这么操作。)
 贴上mpvue的源码：
 
@@ -65,7 +65,7 @@ if (attrs && on && attrs['eventid'] === eventid) {
   });
   return res
 }
-6.在调用wx的showToast以及showModal的时候，在success回调里面是无妨获取到this指向，
+##  6.在调用wx的showToast以及showModal的时候，在success回调里面是无妨获取到this指向，
 需要在外面定义如:
 const vue = this
 才能获取到。
