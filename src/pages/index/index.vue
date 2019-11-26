@@ -144,7 +144,14 @@
         console.log('banner ...')
       },
       onCategoryClick(category) {
-        console.log(category)
+        this.$router.push({
+          path: '/pages/list/main',
+          query: {
+            key: 'categoryId',
+            text: category.category,
+            title: category.categoryText
+          }
+        })
       },
       onCategoryMoreClick() {
         this.$router.push({

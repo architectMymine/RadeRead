@@ -29,9 +29,8 @@
                 <div class="book-title book-author">{{book.categoryText}}</div>
               </div>
             </div>
-
           </div>
-          <div class="category-wrapper" v-else>
+          <div class="category-wrapper" v-else  @click="onBookClick(book)">
             <div class="categoty-text">{{book.text}}</div>
             <div class="categoty-num">{{book.num}}本书</div>
             <div class="categoty-img-wrapper">
