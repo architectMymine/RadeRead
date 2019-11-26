@@ -78,6 +78,8 @@ npm run build --report
 
 ## 7.在新建page的时候，注册页面的时候，如： pages/list/main
 ##  中的list其实指的就是文件夹的名字，并非你vue文件的名字。
+
+## 8.DetailContent再次出现问题，第一次进入有目录生成，而第二次进入的时候目录没有生成
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

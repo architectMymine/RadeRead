@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-contents-wrapper" v-if="contents.length>0">
+  <div class="detail-contents-wrapper">
     <div class="detail-contents-title">目录</div>
     <div
       class="detail-contents"
@@ -18,16 +18,19 @@
 </template>
 
 <script>
-    export default {
-        props: {
-            contents: Array
-        },
-        methods: {
-            readBook(nav) {
-                this.$emit('readBook', nav)
-            }
-        }
+  export default {
+    props: {
+      contents: Array
+    },
+    methods: {
+      readBook(nav) {
+        this.$emit('readBook', nav)
+      }
+    },
+    mounted() {
+      console.log(this.contents.length)
     }
+  }
 </script>
 
 <style lang="scss" scoped>
