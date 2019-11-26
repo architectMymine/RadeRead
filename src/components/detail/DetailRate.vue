@@ -15,16 +15,16 @@
 </template>
 
 <script>
-    export default {
-        props: {
-            rateValue: Number
-        },
-        methods: {
-            onRateChange(e) {
-                this.$emit('onRateChange', e.mp.detail)
-            }
-        }
+  export default {
+    props: {
+      rateValue: Number
+    },
+    methods: {
+      onRateChange(e) {
+        this.$emit('onRateChange', e.mp.detail)
+      }
     }
+  }
 </script>
 
 <style lang="scss" scoped>

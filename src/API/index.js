@@ -1,5 +1,5 @@
-import {get, post} from '../utils/request'
-import {APP_ID, APP_SECRET} from '../utils/const'
+import { get, post } from '../utils/request'
+import { APP_ID, APP_SECRET } from '../utils/const'
 
 const API_URL = 'https://test.youbaobao.xyz:18081'
 
@@ -50,7 +50,22 @@ export function bookDetail(params) {
 export function bookRankSave(params) {
   return get(`${API_URL}/book/rank/save`, params)
 }
+
 export function bookContents(params) {
   return get(`${API_URL}/book/contents`, params)
 }
 
+export function bookIsInShelf(params) {
+  return get(`${API_URL}/book/shelf/get`, params)
+}
+
+export function bookShelfSave(params) {
+  return get(`${API_URL}/book/shelf/save`, {
+    shelf: JSON.stringify(params)
+  })
+}
+export function bookShelfRemove(params) {
+  return get(`${API_URL}/book/shelf/remove`, {
+    shelf: JSON.stringify(params)
+  })
+}
