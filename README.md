@@ -55,21 +55,21 @@ npm run build --report
 ##  5.写在DetailBottom的事件不会触发，据说是mpvue的一个bug，解决方法就是不使用组件，直接将组件的内容写到
 ##     detail页面中，这时候事件会正常触发(之后开发可以这么操作。)
 ##     贴上mpvue的源码：
-##     
-##     var attrs = data.attrs; // 获取事件 id
-##     var on = data.on; // 事件实际存储位置，这里返回的是 undefined
-##     if (attrs && on && attrs['eventid'] === eventid) {
-##       eventTypes.forEach(function (et) {
-##         var h = on[et];
-##         if (typeof h === 'function') {
-##           res.push(h);
-##         } else if (Array.isArray(h)) {
-##           res = res.concat(h);
-##         }
-##       });
-##       return res
-##     }
-
+ ```     
+     var attrs = data.attrs; // 获取事件 id
+     var on = data.on; // 事件实际存储位置，这里返回的是 undefined
+     if (attrs && on && attrs['eventid'] === eventid) {
+       eventTypes.forEach(function (et) {
+         var h = on[et];
+         if (typeof h === 'function') {
+           res.push(h);
+         } else if (Array.isArray(h)) {
+           res = res.concat(h);
+         }
+       });
+       return res
+     }
+```
 
 ##  6.在调用wx的showToast以及showModal的时候，在success回调里面是无妨获取到this指向，
 ##  需要在外面定义如:
