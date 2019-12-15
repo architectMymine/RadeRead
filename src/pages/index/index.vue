@@ -127,7 +127,7 @@
         }
       },
       onHomeBookClick(book) {
-        this.$router.push({
+          this.$router.push({
           path: '/pages/detail/main',
           query: {
             fileName: book.fileName

@@ -16,7 +16,6 @@ export function get(url, param = {}, showError = true) {
   if (fly) {
     return new Promise((resolve, reject) => {
       fly.get(url, param).then(response => {
-        console.log(response)
         if (response && response.data && response.data.error_code === 0) {
           resolve(response)
         } else {

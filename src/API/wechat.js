@@ -18,7 +18,6 @@ export function getSetting(auth, OnSuccess, Onfail) {
 export function getUserInfo(OnSuccess, Onfail) {
   mpvue.getUserInfo({
     success(res) {
-      console.log(res)
       const { userInfo } = res
       if (userInfo) {
         OnSuccess(res)

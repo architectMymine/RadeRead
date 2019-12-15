@@ -80,6 +80,6 @@ npm run build --report
 ##  中的list其实指的就是文件夹的名字，并非你vue文件的名字。
 
 ## 8.DetailContent再次出现问题，第一次进入有目录生成，而第二次进入的时候目录没有生成
+      已找到解决办法，就是在每次重新请求的时候，先重置一下数组，让它变成空数组。
 ```
-
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
