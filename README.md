@@ -82,4 +82,10 @@ npm run build --report
 ## 8.DetailContent再次出现问题，第一次进入有目录生成，而第二次进入的时候目录没有生成
       已找到解决办法，就是在每次重新请求的时候，先重置一下数组，让它变成空数组。
 ```
+```
+## 9.书架页面获取到数据的值，但是无法更新到页面。
+    猜测，可能是mpvue框架造成的，因为微信小程序也算是数据绑定，有可能mpvue只调用了一次setData,
+    但是这时数据还没请求回来，导致无法更新数据到页面。
+    暂时解决办法，使用computed返回数据，这应该是可以调用setData函数的。
+```
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
