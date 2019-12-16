@@ -78,3 +78,8 @@ export function searchList(params) {
 export function categoryList() {
   return get(`${API_URL}/book/category/list/v2`)
 }
+
+export function userDay(params) {
+  return get(`${API_URL}/user/day`, params)
+}
+

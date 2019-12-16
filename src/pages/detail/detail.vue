@@ -42,90 +42,107 @@
 </template>
 
 <script>
-    import DetailBook from '../../components/detail/DetailBook'
-    import DetailStat from '../../components/detail/DetailStat'
-    import DetailRate from '../../components/detail/DetailRate'
-    import DetailContents from '../../components/detail/DetailContents'
-    import {bookDetail, bookRankSave, bookContents, bookIsInShelf, bookShelfSave, bookShelfRemove} from '../../API'
-    import {getStorageSync} from '../../API/wechat'
+  import DetailBook from '../../components/detail/DetailBook'
+  import DetailStat from '../../components/detail/DetailStat'
+  import DetailRate from '../../components/detail/DetailRate'
+  import DetailContents from '../../components/detail/DetailContents'
+  import { bookDetail, bookRankSave, bookContents, bookIsInShelf, bookShelfSave, bookShelfRemove } from '../../API'
+  import { getStorageSync } from '../../API/wechat'
 
-    export default {
-        components: {DetailContents, DetailRate, DetailStat, DetailBook},
-        data() {
-            return {
-                book: {},
-                contents: [],
-                IsInShelf: false
-            }
-        },
-        methods: {
-            handleShelf() {
-                const openId = getStorageSync('openId')
-                const {fileName} = this.$route.query
-                if (!this.IsInShelf) {
-                    bookShelfSave({openId, fileName}).then(() => {
-                        this.getBookIsInShelf()
-                    })
-                } else {
-                    const vue = this
-                    mpvue.showModal({
-                        title: '提示',
-                        content: `是否要把《${this.book.title}》移除书架 `,
-                        success(res) {
-                            if (res.confirm) {
-                                bookShelfRemove({openId, fileName}).then(() => {
-                                    vue.getBookIsInShelf()
-                                })
-                            }
-                        }
-                    })
-                }
-            },
-            readBook(href) {
-                console.log('readbook...')
-            },
-            onRateChange(value) {
-                const openId = getStorageSync('openId')
-                const {fileName} = this.$route.query
-                bookRankSave({openId, fileName, rank: value}).then(() => {
-                    this.getBookDetail()
-                })
-            },
-            getBookDetail() {
-                const openId = getStorageSync('openId')
-                const {fileName} = this.$route.query
-                if (openId && fileName) {
-                    bookDetail({openId, fileName}).then(res => {
-                        this.book = res.data.data
-                    })
-                }
-            },
-            getBookContents() {
-                const {fileName} = this.$route.query
-                if (fileName) {
-                    this.contents = []
-                    bookContents({fileName}).then(res => {
-                        this.contents = res.data.data
-                    })
-                }
-            },
-            getBookIsInShelf() {
-                const openId = getStorageSync('openId')
-                const {fileName} = this.$route.query
-                if (openId && fileName) {
-                    bookIsInShelf({openId, fileName}).then(res => {
-                        const {data} = res.data
-                        this.IsInShelf = data.length === 0 ? this.IsInShelf = false : this.IsInShelf = true
-                    })
-                }
-            }
-        },
-        mounted() {
-            this.getBookDetail()
-            this.getBookContents()
+  export default {
+    components: { DetailContents, DetailRate, DetailStat, DetailBook },
+    data() {
+      return {
+        book: {},
+        contents: [],
+        IsInShelf: false
+      }
+    },
+    methods: {
+      handleShelf() {
+        const openId = getStorageSync('openId')
+        const { fileName } = this.$route.query
+        if (!this.IsInShelf) {
+          bookShelfSave({ openId, fileName }).then(() => {
             this.getBookIsInShelf()
+          })
+        } else {
+          const vue = this
+          mpvue.showModal({
+            title: '提示',
+            content: `是否要把《${this.book.title}》移除书架 `,
+            success(res) {
+              if (res.confirm) {
+                bookShelfRemove({ openId, fileName }).then(() => {
+                  vue.getBookIsInShelf()
+                })
+              }
+            }
+          })
         }
+      },
+      readBook(href) {
+        if (this.book && this.book.fileName) {
+          const query = {
+            fileName: this.book.fileName,
+            opf: this.book.opf
+          }
+          if (href) {
+            const index = href.indexOf('/')
+            if (index >= 0) {
+              query.navigation = href.slice(index + 1)
+            } else {
+              query.navigation = href
+            }
+          }
+          this.$router.push({
+            path: '/pages/read/main',
+            query
+          })
+        }
+      },
+      onRateChange(value) {
+        const openId = getStorageSync('openId')
+        const { fileName } = this.$route.query
+        bookRankSave({ openId, fileName, rank: value }).then(() => {
+          this.getBookDetail()
+        })
+      },
+      getBookDetail() {
+        const openId = getStorageSync('openId')
+        const { fileName } = this.$route.query
+        if (openId && fileName) {
+          bookDetail({ openId, fileName }).then(res => {
+            this.book = res.data.data
+          })
+        }
+      },
+      getBookContents() {
+        const { fileName } = this.$route.query
+        if (fileName) {
+          this.contents = []
+          bookContents({ fileName }).then(res => {
+            this.contents = res.data.data
+          })
+        }
+      },
+      getBookIsInShelf() {
+        const openId = getStorageSync('openId')
+        const { fileName } = this.$route.query
+        if (openId && fileName) {
+          bookIsInShelf({ openId, fileName }).then(res => {
+            const { data } = res.data
+            this.IsInShelf = data.length === 0 ? this.IsInShelf = false : this.IsInShelf = true
+          })
+        }
+      }
+    },
+    mounted() {
+      this.getBookDetail()
+      this.getBookContents()
+      this.getBookIsInShelf()
     }
+  }
 </script>
 
 <style lang="scss" scoped>
